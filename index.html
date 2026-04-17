@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sports Massage — Kenneth</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050508;
+    --surface: rgba(255,255,255,0.04);
+    --glass: rgba(255,255,255,0.06);
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-strong: rgba(255,255,255,0.1);
+    --white: #f0f0ea;
+    --muted: #777;
+    --accent: #c8ff00;
+    --accent-glow: rgba(200,255,0,0.4);
+    --accent-dim: rgba(200,255,0,0.15);
+    --red: #ff6b5a;
+    --red-bg: rgba(255,107,90,0.06);
+    --red-border: rgba(255,107,90,0.12);
+    --blur: 16px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 0 0 60px;
+  }
+
+  /* ─── BACKGROUND MESH GRADIENT ─── */
+  .bg-mesh {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .bg-mesh .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    animation: float 12s ease-in-out infinite;
+  }
+  .bg-mesh .orb-1 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(200,255,0,0.08), transparent 70%);
+    top: -100px; right: -100px;
+    animation-delay: 0s;
+  }
+  .bg-mesh .orb-2 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,200,255,0.05), transparent 70%);
+    bottom: 20%; left: -80px;
+    animation-delay: -4s;
+  }
+  .bg-mesh .orb-3 {
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(200,255,0,0.04), transparent 70%);
+    bottom: -50px; right: 30%;
+    animation-delay: -8s;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 15px) scale(0.95); }
+  }
+
+  .content { position: relative; z-index: 1; }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 52px 32px 44px;
+    position: relative;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding: 6px 16px;
+    border-radius: 24px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(200,255,0,0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 0.92;
+    letter-spacing: 2px;
+  }
+  .hero h1 .line1 {
+    color: var(--white);
+    display: block;
+  }
+  .hero h1 .line2 {
+    color: var(--accent);
+    display: block;
+    text-shadow:
+      0 0 7px rgba(200,255,0,0.3),
+      0 0 20px rgba(200,255,0,0.15),
+      0 0 40px rgba(200,255,0,0.08);
+  }
+  .hero-sub {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 340px;
+  }
+
+  /* ─── GLASS CARD ─── */
+  .glass {
+    background: linear-gradient(135deg, var(--glass), var(--surface));
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transition: border-color 0.4s, box-shadow 0.4s;
+  }
+  .glass:hover {
+    border-color: rgba(200,255,0,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 20px rgba(200,255,0,0.05);
+  }
+
+  /* ─── SESSIONS ─── */
+  .sessions {
+    display: flex;
+    gap: 14px;
+    padding: 0 32px 28px;
+  }
+  .session-card {
+    flex: 1;
+    padding: 24px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .session-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(200,255,0,0.3), transparent);
+  }
+  .session-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    margin-bottom: 4px;
+  }
+  .session-card p {
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .duration {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--accent);
+    padding: 5px 14px;
+    border-radius: 10px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(200,255,0,0.15);
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    padding: 24px 32px;
+  }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(200,255,0,0.2), transparent);
+  }
+
+  /* ─── BENEFITS GRID ─── */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .benefit {
+    padding: 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .benefit::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--accent), rgba(200,255,0,0.2));
+    border-radius: 2px;
+  }
+  .benefit-icon {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  .benefit p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(240,240,234,0.8);
+  }
+
+  /* ─── INFO ROW ─── */
+  .info-row {
+    display: flex;
+    gap: 12px;
+  }
+  .info-box {
+    flex: 1;
+    padding: 20px 16px;
+  }
+  .info-box h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+    color: var(--accent);
+    text-shadow: 0 0 12px rgba(200,255,0,0.15);
+  }
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    color: rgba(240,240,234,0.75);
+  }
+  .dot {
+    width: 5px; height: 5px;
+    min-width: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--accent-glow);
+  }
+
+  /* ─── HEALTH ADVISORY ─── */
+  .health {
+    background: linear-gradient(135deg, var(--red-bg), rgba(255,107,90,0.02));
+    border: 1px solid var(--red-border);
+    border-radius: 16px;
+    padding: 22px 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .health-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--red);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 0 10px rgba(255,107,90,0.2);
+  }
+  .health-list {
+    columns: 2;
+    column-gap: 18px;
+    font-size: 11px;
+    line-height: 1.9;
+    color: rgba(240,240,234,0.5);
+  }
+  .health-list span {
+    display: block;
+    break-inside: avoid;
+  }
+  .health-list span::before {
+    content: '·';
+    margin-right: 6px;
+    color: var(--red);
+  }
+  .health-note {
+    margin-top: 14px;
+    font-size: 10px;
+    color: rgba(240,240,234,0.35);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* ─── PRICING — GLOWING BORDER CARD ─── */
+  .pricing-wrapper {
+    padding: 28px 32px;
+  }
+  .pricing-card {
+    position: relative;
+    overflow: hidden;
+    padding: 3px;
+    border-radius: 20px;
+  }
+  .pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(
+      from 0deg,
+      var(--accent),
+      rgba(0,230,200,0.6),
+      rgba(100,200,255,0.4),
+      var(--accent),
+      rgba(0,230,200,0.6),
+      var(--accent)
+    );
+    animation: spin 4s linear infinite;
+    transform: translate(-50%, -50%);
+  }
+  @keyframes spin {
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  .pricing-inner {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, #0c0c10, #0a0a0e);
+    border-radius: 18px;
+    text-align: center;
+    padding: 36px 20px;
+  }
+  .price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    line-height: 1;
+    color: var(--accent);
+    text-shadow:
+      0 0 10px rgba(200,255,0,0.3),
+      0 0 30px rgba(200,255,0,0.12),
+      0 0 60px rgba(200,255,0,0.06);
+  }
+  .price sup {
+    font-size: 28px;
+    vertical-align: super;
+    margin-right: 2px;
+    color: rgba(200,255,0,0.7);
+  }
+  .price-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 1.5px;
+  }
+
+  /* ─── CTA — NEON GLOW BUTTON ─── */
+  .cta {
+    padding: 0 32px;
+    text-align: center;
+  }
+  .cta-card {
+    padding: 32px 20px;
+  }
+  .cta-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 40px;
+    border-radius: 50px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow:
+      0 0 10px rgba(200,255,0,0.3),
+      0 0 30px rgba(200,255,0,0.15),
+      0 0 60px rgba(200,255,0,0.08);
+  }
+  .cta-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      0 0 15px rgba(200,255,0,0.5),
+      0 0 40px rgba(200,255,0,0.25),
+      0 0 80px rgba(200,255,0,0.12);
+  }
+  .cta-sub {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 1px;
+    margin: 0 32px;
+    background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+  }
+
+  @media print {
+    .bg-mesh, .noise { display: none; }
+    body { background: #000; }
+    .page { max-width: 100%; }
+    .pricing-card::before { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Animated mesh gradient background -->
+<div class="bg-mesh">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- Film grain overlay -->
+<div class="noise"></div>
+
+<div class="page">
+<div class="content">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="tag">Professional Recovery</div>
+    <h1>
+      <span class="line1">SPORTS</span>
+      <span class="line2">MASSAGE</span>
+    </h1>
+    <p class="hero-sub">Targeted deep tissue therapy to accelerate recovery, reduce pain, and elevate your performance.</p>
+  </div>
+
+  <!-- SESSIONS -->
+  <div class="sessions">
+    <div class="session-card glass">
+      <h3>Full Body</h3>
+      <p>Head-to-toe recovery</p>
+      <div class="duration">1 Hour</div>
+    </div>
+    <div class="session-card glass">
+      <h3>Lower Body</h3>
+      <p>Legs & glutes focus</p>
+      <div class="duration">1 Hour</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BENEFITS -->
+  <div class="section">
+    <div class="section-label">Why Sports Massage 🤔</div>
+    <div class="benefits-grid">
+      <div class="benefit glass">
+        <div class="benefit-icon">🩸</div>
+        <p>Increase blood flow — delivers nutrients & oxygen to aid recovery</p>
+      </div>
+      <div class="benefit glass">
+        <div class="benefit-icon">💧</div>
+        <p>Speeds up lymphatic drainage for faster toxin removal</p>
+      </div>
+      <div class="benefit glass">
+        <div class="benefit-icon">⚡</div>
+        <p>Boosts metabolic rate, improves flexibility & effective contraction</p>
+      </div>
+      <div class="benefit glass">
+        <div class="benefit-icon">💆</div>
+        <p>Reduces pain, soreness & stiffness — speeds muscle recovery</p>
+      </div>
+      <div class="benefit glass">
+        <div class="benefit-icon">🛡️</div>
+        <p>Reduces risk of injury through preventive care</p>
+      </div>
+      <div class="benefit glass">
+        <div class="benefit-icon">🧘</div>
+        <p>Deep relaxation for both body and mind</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT TO KNOW -->
+  <div class="section">
+    <div class="section-label">What to Know</div>
+    <div class="info-row">
+      <div class="info-box glass">
+        <h4>✅ PROVIDED</h4>
+        <div class="info-item"><span class="dot"></span>Massage bed</div>
+        <div class="info-item"><span class="dot"></span>Massage oils</div>
+      </div>
+      <div class="info-box glass">
+        <h4>🎒 PREPARE</h4>
+        <div class="info-item"><span class="dot"></span>Two big towels</div>
+        <div class="info-item"><span class="dot"></span>Wear loose shorts</div>
+        <div class="info-item"><span class="dot"></span>Own oils? Let me know</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- HEALTH ADVISORY -->
+  <div class="section">
+    <div class="health">
+      <div class="health-title">⚠️ Health Advisory</div>
+      <div class="health-list">
+        <span>Skin diseases/disorders</span>
+        <span>Recent/extensive bruising</span>
+        <span>Recent hemorrhage</span>
+        <span>Recent scar tissue</span>
+        <span>Recent operations</span>
+        <span>Burns or sunburn</span>
+        <span>Inflamed moles</span>
+        <span>Bone fractures</span>
+        <span>Metal pins or plates</span>
+        <span>Swollen/painful joints</span>
+        <span>Recent sprains/strains</span>
+        <span>Swellings</span>
+        <span>Heart conditions</span>
+        <span>High/low blood pressure</span>
+        <span>Diabetes</span>
+        <span>Osteoporosis</span>
+      </div>
+      <p class="health-note">If any of the above apply, please inform me and consult your personal healthcare provider before booking.</p>
+    </div>
+  </div>
+
+  <!-- PRICING WITH ANIMATED GRADIENT BORDER -->
+  <div class="pricing-wrapper">
+    <div class="pricing-card">
+      <div class="pricing-inner">
+        <div class="section-label" style="justify-content:center;">Pricing</div>
+        <div class="price"><sup>RM</sup>110</div>
+        <p class="price-sub">per session · 1 hour</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <div class="cta-card glass">
+      <div class="section-label" style="justify-content:center;">Book Now 📞</div>
+      <div class="cta-name">Kenneth</div>
+      <a href="tel:+60167707136" class="cta-btn">📞 016-770 7136</a>
+      <p class="cta-sub">WhatsApp or call to book your session</p>
+    </div>
+  </div>
+
+</div>
+</div>
+</body>
+</html>
